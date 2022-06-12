@@ -219,14 +219,3 @@ export async function mintFlanear(receiverId) {
     "1000000000000000000000000" // attached deposit in yoctoNEAR (optional)
   );
 }
-
-export async function upgradeFlanear(tokenId, receiverId) {
-  return nftContract.update_stats(
-    {
-      token_id: tokenId,
-      account_id: receiverId,
-    },
-    "300000000000000", // attached GAS (optional)
-    "0" // attached deposit in yoctoNEAR (optional)
-  );
-}
