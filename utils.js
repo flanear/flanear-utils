@@ -54,7 +54,7 @@ const nftContract = new nearAPI.Contract(
   account,
   'nft.flanear.testnet',
   {
-    changeMethods: ['nft_mint'],
+    changeMethods: ["nft_mint", "nft_token", "update_stats"],
   }
 );
 
@@ -208,14 +208,25 @@ export async function mintFlanear(receiverId) {
         issued_at: Date.now().toString(),
         extra: JSON.stringify({
           level: 1,
-          stamina: 20,
-          income: 3,
-          recovery: 2,
-          energy: 90,
+          stamina: Math.floor(Math.random() * 10),
+          income: Math.floor(Math.random() * 10),
+          recovery: Math.floor(Math.random() * 10),
+          energy: Math.floor(Math.random() * 10),
         }),
       }
     },
     "300000000000000", // attached GAS (optional)
     "1000000000000000000000000" // attached deposit in yoctoNEAR (optional)
+  );
+}
+
+export async function upgradeFlanear(tokenId, receiverId) {
+  return nftContract.update_stats(
+    {
+      token_id: tokenId,
+      account_id: receiverId,
+    },
+    "300000000000000", // attached GAS (optional)
+    "0" // attached deposit in yoctoNEAR (optional)
   );
 }
