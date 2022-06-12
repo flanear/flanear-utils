@@ -1,17 +1,17 @@
-// Import NEAR API JS
-import nearAPI from "near-api-js";
+import * as nearAPI from 'near-api-js';
+
+// import {Buffer} from "buffer";
+// window.Buffer = Buffer;
+
+const { connect, keyStores, KeyPair } = nearAPI;
 
 // Key Store
-const { keyStores, KeyPair } = nearAPI;
-
 const keyStore = new keyStores.InMemoryKeyStore();
 
 const keyPair = KeyPair.fromString("ed25519:4cGRBRxPATqTK3AJYQKY6QqeThgvxaDTi35BmVR1H3F4m6nvjxJnLqz954JnK93TWSkW4jLc4jddHWfKHrYjLaMh");
 await keyStore.setKey("testnet", "flanear.testnet", keyPair);
 
 // connect
-const { connect } = nearAPI;
-
 const config = {
   networkId: "testnet",
   keyStore, 
