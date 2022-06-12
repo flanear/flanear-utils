@@ -1,0 +1,17 @@
+{
+  "name": "flanear-utils",
+  "version": "1.0.0",
+  "description": "This repository provides utils for interacting with game smart contracts.",
+  "main": "utils.js",
+  "repository": "https://github.com/flanear/flanear-utils.git",
+  "author": "Illia Malovanyi <xxffwwoqqzz@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "near-api-js": "^0.45.1",
+    "near-seed-phrase": "^0.2.0"
+  },
+  "devDependencies": {
+    "jest": "^28.1.1"
+  }
+}
