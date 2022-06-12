@@ -8,8 +8,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "near-api-js": "^0.45.1",
-    "near-seed-phrase": "^0.2.0"
+    "near-api-js": "^0.45.1"
   },
   "devDependencies": {
     "jest": "^28.1.1"

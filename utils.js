@@ -1,19 +1,12 @@
 // Import NEAR API JS
 import nearAPI from "near-api-js";
-import { parseSeedPhrase } from "near-seed-phrase";
-
-function getKeyPairFromSeedPhrase(seedPhrase) {
-  const { secretKey } = parseSeedPhrase(seedPhrase);
-  return KeyPair.fromString(secretKey);
-}
 
 // Key Store
 const { keyStores, KeyPair } = nearAPI;
 
 const keyStore = new keyStores.InMemoryKeyStore();
-const SEED_PHRASE = "mango develop grant used hammer vocal nuclear wash increase keep average hospital";
 
-const keyPair = getKeyPairFromSeedPhrase(SEED_PHRASE);
+const keyPair = KeyPair.fromString("ed25519:4cGRBRxPATqTK3AJYQKY6QqeThgvxaDTi35BmVR1H3F4m6nvjxJnLqz954JnK93TWSkW4jLc4jddHWfKHrYjLaMh");
 await keyStore.setKey("testnet", "flanear.testnet", keyPair);
 
 // connect
@@ -217,5 +210,16 @@ export async function mintFlanear(receiverId) {
     },
     "300000000000000", // attached GAS (optional)
     "1000000000000000000000000" // attached deposit in yoctoNEAR (optional)
+  );
+}
+
+export async function upgradeFlanear(tokenId, receiverId) {
+  return nftContract.update_stats(
+    {
+      token_id: tokenId,
+      account_id: receiverId,
+    },
+    "300000000000000", // attached GAS (optional)
+    "0" // attached deposit in yoctoNEAR (optional)
   );
 }
