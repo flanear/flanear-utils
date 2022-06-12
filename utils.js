@@ -35,17 +35,17 @@ const krkContract = new nearAPI.Contract(
   account, // the account object that is connecting
   "krk.flanear.testnet",
   {
-    changeMethods: ["ft_transfer"], // change methods modify state
+    changeMethods: ["register_account", "ft_transfer"], // change methods modify state
     sender: account, // account object to initialize and sign transactions.
   }
 );
 
-const flnContract = new nearAPI.Contract(
+const flanContract = new nearAPI.Contract(
   account, // the account object that is connecting
-  "fln.flanear.testnet",
+  "flan.flanear.testnet",
   {
     // name of contract you're connecting to
-    changeMethods: ["ft_transfer"], // change methods modify state
+    changeMethods: ["register_account", "ft_transfer"], // change methods modify state
     sender: account, // account object to initialize and sign transactions.
   }
 );
@@ -60,10 +60,52 @@ const nftContract = new nearAPI.Contract(
 
 
 // transfers some KRK on behalf of flanear.testnet
-export async function transferKrk(receiverId, amount) {}
+export async function transferKrk(receiverId, amount) {
+  if (amount > 1000000000) {
+    throw new Error("You can not send so much KRK");
+  }
+
+  await krkContract.register_account(
+    {
+      account_id: receiverId,
+    },
+    "300000000000000", // attached GAS (optional)
+    "0" // attached deposit in yoctoNEAR (optional)
+  );
+
+  return krkContract.ft_transfer(
+    {
+      receiver_id: receiverId,
+      amount: String(amount),
+    },
+    "300000000000000", // attached GAS (optional)
+    "1" // attached deposit in yoctoNEAR (optional)
+  );
+}
 
 // transfers some FLN on behalf of flanear.testnet
-export async function transferFln(receiverId, amount) {}
+export async function transferFlan(receiverId, amount) {
+  if (amount > 1000000000) {
+    throw new Error("You can not send so much FLAN");
+  }
+
+  await flanContract.register_account(
+    {
+      account_id: receiverId,
+    },
+    "300000000000000", // attached GAS (optional)
+    "0" // attached deposit in yoctoNEAR (optional)
+  );
+
+  return flanContract.ft_transfer(
+    {
+      receiver_id: receiverId,
+      amount: String(amount),
+    },
+    "300000000000000", // attached GAS (optional)
+    "1" // attached deposit in yoctoNEAR (optional)
+  );
+}
 
 // mints a new flanear on behalf of flanear.testnet
 export async function mintFlanear(receiverId) {
